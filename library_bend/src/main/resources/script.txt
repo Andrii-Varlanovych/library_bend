@@ -1,0 +1,47 @@
+CREATE TABLE Users (
+                       id INT AUTO_INCREMENT,
+                       name VARCHAR(100) check ( length(name) >2 ) NOT NULL,
+                       surname VARCHAR(100) check ( length(surname) >2 )NOT NULL,
+                       email VARCHAR(30) NOT NULL,
+                       primary key (id)
+);
+
+CREATE TABLE Books (
+                       id int auto_increment,
+                       title varchar(100) check ( length(title)>3 ) not null ,
+                       author varchar(50) check ( length(author)>2 ) not null ,
+                       available boolean,
+                       user_id int,
+                       primary key (id),
+                       FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+INSERT INTO Users (name, surname, email) VALUES ('John', 'Doe', 'john.doe@example.com');
+INSERT INTO Users (name, surname, email) VALUES ('Alice', 'Smith', 'alice.smith@example.com');
+INSERT INTO Users (name, surname, email) VALUES ('Bob', 'Johnson', 'bob.johnson@example.com');
+INSERT INTO Users (name, surname, email) VALUES ('Eva', 'Brown', 'eva.brown@example.com');
+
+
+
+INSERT INTO Books (title, author, available, user_id) VALUES ('Brave New World', 'Aldous Huxley', true, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('1984', 'George Orwell', true, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Snow Crash', 'Neal Stephenson', false, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The War of the Worlds', 'H.G. Wells', true, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Chronicles of Narnia', 'C.S. Lewis', false, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Starship Troopers', 'Robert A. Heinlein', true, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('I, Robot', 'Isaac Asimov', false, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Hunger Games', 'Suzanne Collins', true, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Time Machine', 'H.G. Wells', false, 3);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Altered Carbon', 'Richard K. Morgan', true, 3);
+
+INSERT INTO Books (title, author, available, user_id) VALUES ('Animal Farm', 'George Orwell', true, 3);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Homage to Catalonia', 'George Orwell', true, 3);
+
+INSERT INTO Books (title, author, available, user_id) VALUES ('Catching Fire', 'Suzanne Collins', true, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Mockingjay', 'Suzanne Collins', true, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Gregor the Overlander', 'Suzanne Collins', true, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Underland Chronicles: Book Two - Gregor and the Prophecy of Bane', 'Suzanne Collins', true, 4);
+
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Caves of Steel', 'Isaac Asimov', false, 4);
+
+INSERT INTO Books (title, author, available, user_id) VALUES ('Brave New World', 'Aldous Huxley', true, 0);
