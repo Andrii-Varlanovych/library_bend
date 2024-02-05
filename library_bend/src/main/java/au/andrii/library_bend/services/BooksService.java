@@ -25,7 +25,8 @@ public class BooksService {
 
     public List<Book> getBooks() {
         try {
-            return booksRepository.findAll();
+//            return booksRepository.findAll(); // N+1 problem
+            return booksRepository.getBooksWithUsers();
         } catch (RuntimeException e) {
             throw new LibraryDataBaseException("Can't fetch books from DB");
         }
