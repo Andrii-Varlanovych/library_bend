@@ -1,15 +1,17 @@
 package au.andrii.library_bend.services;
 
 import au.andrii.library_bend.models.Book;
+import au.andrii.library_bend.models.Role;
 import au.andrii.library_bend.models.User;
 import au.andrii.library_bend.repositories.UserRepository;
 import au.andrii.library_bend.util.LibraryCantSaveException;
 import au.andrii.library_bend.util.LibraryDataBaseException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +19,11 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getUsers() {
@@ -38,6 +42,14 @@ public class UserService {
             throw new LibraryDataBaseException("Can't get user from DB");
         }
         return foundedUser.orElseThrow(() -> new LibraryDataBaseException("Can't find user with ID " + id + " in DB"));
+    }
+
+    public User findUserByEmail(String email) {
+        try {
+            return userRepository.findUserByEmail(email).get();
+        } catch (RuntimeException e) {
+            throw new LibraryDataBaseException("Can't find user with email " + email + " in DB");
+        }
     }
 
     public List<Book> getUserBooks(int id) {
@@ -74,6 +86,12 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user) {
+        if(userRepository.findUserByEmail(user.getEmail()).isPresent()) {
+            throw new LibraryCantSaveException("User with email " + user.getEmail() + " is already exists in DB");
+        }
+
+        user.setRole(Role.ROLE_USER.name());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             return userRepository.save(user);
         } catch (RuntimeException e) {

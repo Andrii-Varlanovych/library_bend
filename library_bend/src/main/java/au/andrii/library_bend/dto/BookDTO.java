@@ -1,6 +1,5 @@
 package au.andrii.library_bend.dto;
 
-import au.andrii.library_bend.models.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -20,7 +19,7 @@ public class BookDTO {
     @JsonProperty("isAvailable")
     private boolean isAvailable;
 
-    private User user;
+    private UserDTO user;
 
     public BookDTO() {
     }
@@ -57,11 +56,11 @@ public class BookDTO {
         isAvailable = available;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
@@ -72,6 +71,7 @@ public class BookDTO {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", isAvailable=" + isAvailable +
+                ", user=" + user +
                 '}';
     }
 }

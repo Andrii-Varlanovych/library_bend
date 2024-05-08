@@ -3,6 +3,8 @@ CREATE TABLE Users (
                        name VARCHAR(100) check ( length(name) >2 ) NOT NULL,
                        surname VARCHAR(100) check ( length(surname) >2 )NOT NULL,
                        email VARCHAR(30) NOT NULL,
+                       password VARCHAR(20) check ( length(password) >4 ) NOT NULL,
+                       role VARCHAR(20) NOT NULL,
                        primary key (id)
 );
 
@@ -16,32 +18,45 @@ CREATE TABLE Books (
                        FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
-INSERT INTO Users (name, surname, email) VALUES ('John', 'Doe', 'john.doe@example.com');
-INSERT INTO Users (name, surname, email) VALUES ('Alice', 'Smith', 'alice.smith@example.com');
-INSERT INTO Users (name, surname, email) VALUES ('Bob', 'Johnson', 'bob.johnson@example.com');
-INSERT INTO Users (name, surname, email) VALUES ('Eva', 'Brown', 'eva.brown@example.com');
+INSERT INTO Users (name, surname, email, role) VALUES ('John', 'Doe', 'john.doe@example.com', 'ROLE_USER');
+INSERT INTO Users (name, surname, email, role) VALUES ('Alice', 'Smith', 'alice.smith@example.com', 'ROLE_USER');
+INSERT INTO Users (name, surname, email, role) VALUES ('Bob', 'Johnson', 'bob.johnson@example.com', 'ROLE_USER');
+INSERT INTO Users (name, surname, email, role) VALUES ('Eva', 'Brown', 'eva.brown@example.com', 'ROLE_USER');
 
 
 
-INSERT INTO Books (title, author, available, user_id) VALUES ('Brave New World', 'Aldous Huxley', true, 1);
-INSERT INTO Books (title, author, available, user_id) VALUES ('1984', 'George Orwell', true, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Brave New World', 'Aldous Huxley', false, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('1984', 'George Orwell', false, 1);
 INSERT INTO Books (title, author, available, user_id) VALUES ('Snow Crash', 'Neal Stephenson', false, 1);
-INSERT INTO Books (title, author, available, user_id) VALUES ('The War of the Worlds', 'H.G. Wells', true, 1);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The War of the Worlds', 'H.G. Wells', false, 1);
 INSERT INTO Books (title, author, available, user_id) VALUES ('The Chronicles of Narnia', 'C.S. Lewis', false, 2);
-INSERT INTO Books (title, author, available, user_id) VALUES ('Starship Troopers', 'Robert A. Heinlein', true, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Starship Troopers', 'Robert A. Heinlein', false, 2);
 INSERT INTO Books (title, author, available, user_id) VALUES ('I, Robot', 'Isaac Asimov', false, 2);
-INSERT INTO Books (title, author, available, user_id) VALUES ('The Hunger Games', 'Suzanne Collins', true, 2);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Hunger Games', 'Suzanne Collins', false, 2);
 INSERT INTO Books (title, author, available, user_id) VALUES ('The Time Machine', 'H.G. Wells', false, 3);
-INSERT INTO Books (title, author, available, user_id) VALUES ('Altered Carbon', 'Richard K. Morgan', true, 3);
-
-INSERT INTO Books (title, author, available, user_id) VALUES ('Animal Farm', 'George Orwell', true, 3);
-INSERT INTO Books (title, author, available, user_id) VALUES ('Homage to Catalonia', 'George Orwell', true, 3);
-
-INSERT INTO Books (title, author, available, user_id) VALUES ('Catching Fire', 'Suzanne Collins', true, 4);
-INSERT INTO Books (title, author, available, user_id) VALUES ('Mockingjay', 'Suzanne Collins', true, 4);
-INSERT INTO Books (title, author, available, user_id) VALUES ('Gregor the Overlander', 'Suzanne Collins', true, 4);
-INSERT INTO Books (title, author, available, user_id) VALUES ('The Underland Chronicles: Book Two - Gregor and the Prophecy of Bane', 'Suzanne Collins', true, 4);
-
+INSERT INTO Books (title, author, available, user_id) VALUES ('Altered Carbon', 'Richard K. Morgan', false, 3);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Animal Farm', 'George Orwell', false, 3);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Homage to Catalonia', 'George Orwell', false, 3);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Catching Fire', 'Suzanne Collins', false, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Mockingjay', 'Suzanne Collins', false, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('Gregor the Overlander', 'Suzanne Collins', false, 4);
+INSERT INTO Books (title, author, available, user_id) VALUES ('The Underland Chronicles: Book Two - Gregor and the Prophecy of Bane', 'Suzanne Collins', false, 4);
 INSERT INTO Books (title, author, available, user_id) VALUES ('The Caves of Steel', 'Isaac Asimov', false, 4);
-
 INSERT INTO Books (title, author, available, user_id) VALUES ('Brave New World', 'Aldous Huxley', true, 0);
+
+
+eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJnbGliLnZhcmxhbkBleGFtcGxlLmNvbSIsImlhdCI6MTcxMDc3MTE0MCwiZXhwIjoxNzEwODU3NTQwfQ.8InOQcK2KXXp_mR4TbQN0_h33Sk7lINTSEB_9J3IOWDP_wNU41cYJyJjB-G9No-P  - 18/03 16.10 Glib
+
+eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlhdCI6MTcxNTA4MTM3NiwiZXhwIjoxNzE1Njg2MTc2fQ.3xHSjSqRdPv3bALhUplmMD_YzmflWWKNX1mhJo3o9-rNvBK8B29u_J1Q1B4rcjdW  07/05 14.30 Admin     "name":"Admin",
+                                                                                                                                                                                                "surname":"First",
+                                                                                                                                                                                                "email":"admin@example.com",
+                                                                                                                                                                                                "password":"admin_password"
+
+
+eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzE1MDgxNTA1LCJleHAiOjE3MTU2ODYzMDV9.JsMJT9APLolcJXHO2xRnPiJnPWLKhLDDWyLiqVP0DLw7j_-LB_0RyiVZK0N3eP_4   07/05 14.33 User      {
+                                                                                                                                                                                                     "name":"User",
+                                                                                                                                                                                                     "surname":"First",
+                                                                                                                                                                                                     "email":"user@example.com",
+                                                                                                                                                                                                     "password":"user_password"
+
+                                                                                                                                                                                                 }

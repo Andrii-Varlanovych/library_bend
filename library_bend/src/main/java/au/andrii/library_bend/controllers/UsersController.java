@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/users")
@@ -47,7 +48,9 @@ public class UsersController {
 
     @GetMapping("/{id}")
     public UserDTO getUser(@PathVariable("id") int id) {
-        return convertUserToUserDTO(userService.findUserById(id));
+        User userById = userService.findUserById(id);
+        UserDTO userDTO = convertUserToUserDTO(userById);
+        return userDTO;
     }
 
     @GetMapping("/{id}/user-books")

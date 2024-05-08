@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,11 +46,9 @@ public class BooksController {
     @GetMapping()
     public List<BookDTO> getBooks() {
         booksService.test();
-        List<BookDTO> collect = booksService.getBooks().stream()
+        return booksService.getBooks().stream()
                 .map(this::convertBookToBookDTO)
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
     @GetMapping("/{id}")
@@ -56,23 +56,24 @@ public class BooksController {
         return convertBookToBookDTO(booksService.findBookById(id));
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public BookDTO saveBook(@RequestBody @Valid BookDTO bookDTO,
-                         BindingResult bindingResult) {
+                            BindingResult bindingResult) {
         booksService.validateBook(bindingResult);
         Book savedBook = booksService.saveBook(convertBookDTOToBook(bookDTO));
         return convertBookToBookDTO(savedBook);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public BookDTO updateBook(@PathVariable("id") int id, @RequestBody @Valid BookDTO bookDTO,
-                         BindingResult bindingResult) {
+                              BindingResult bindingResult) {
         booksService.validateBook(bindingResult);
         Book updatedBook = booksService.saveBook(convertBookDTOToBook(bookDTO));
         return convertBookToBookDTO(updatedBook);
     }
 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/delete/{id}") //TODO not working for USER and ADMIN dont forget to change path in frontend
     public void deleteBook(@PathVariable("id") int id) {
         booksService.deleteBook(id);
     }

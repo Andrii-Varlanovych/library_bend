@@ -1,32 +1,41 @@
 package au.andrii.library_bend.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
+public class UserRegistrationDTO {
 
-public class UserDTO {
-    private int id;
-
+    @Column(name = "name")
     @NotEmpty(message = "Name can't be empty")
     @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
     private String name;
 
+    @Column(name = "surname")
     @NotEmpty(message = "Surname can't be empty")
-    @Size(min = 3, max = 100, message = "Surname must be between 3 and 100 characters")
+    @Size(min = 3, max = 100, message = "Surname must be between 2 and 100 characters")
     private String surname;
 
     @NotEmpty(message = "Email can't be empty")
     @Email(message = "This is not an email")
+    @Column(name = "email")
     private String email;
 
-    public int getId() {
-        return id;
+    @Column(name = "password")
+    @NotEmpty(message = "Password can't be empty")
+    @Size(min = 5, max = 20, message = "Password must be between 3 and 20 characters")
+    private String password;
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRegistrationDTO() {
     }
 
     public String getName() {
@@ -55,12 +64,11 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "UserRegistrationDTO{" +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
-
